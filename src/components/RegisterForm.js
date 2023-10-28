@@ -1,13 +1,22 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../styles/form.css";
+import { useForm } from "react-hook-form";
 const RegisterForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <>
       <Container>
         <Row>
           <Col xxl={2} xl={2} lg={2} md={12} sm={12} xs={12}></Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={12} xs={12}>
-            <Form>
+            <Form onSubmit={handleSubmit(onSubmit)}>
               <div className="register-form">
                 <Row>
                   <Col
@@ -29,7 +38,17 @@ const RegisterForm = () => {
                     className="mb-4"
                   >
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" name="name"></Form.Control>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      {...register("name", {
+                        required: true,
+                      })}
+                      className={`${errors.name ? "error-field" : " "}`}
+                    ></Form.Control>
+                    <span className="error-message">
+                      {errors.name && <p>Name is Required</p>}
+                    </span>
                   </Col>
                   <Col
                     xxl={6}
@@ -41,7 +60,17 @@ const RegisterForm = () => {
                     className="mb-4"
                   >
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" name="email"></Form.Control>
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      {...register("email", {
+                        required: true,
+                      })}
+                      className={`${errors.email ? "error-field" : ""}`}
+                    ></Form.Control>
+                    <span className="error-message">
+                      {errors.email && <p>Email is Required</p>}
+                    </span>
                   </Col>
                   <Col
                     xxl={6}
@@ -56,7 +85,14 @@ const RegisterForm = () => {
                     <Form.Control
                       type="tel"
                       name="mobile-number"
+                      {...register("mobile_number", {
+                        required: true,
+                      })}
+                      className={`${errors.mobile_number ? "error-field" : ""}`}
                     ></Form.Control>
+                    <span className="error-message">
+                      {errors.mobile_number && <p>Mobile Number is Required</p>}
+                    </span>
                   </Col>
                   <Col
                     xxl={6}
@@ -68,7 +104,17 @@ const RegisterForm = () => {
                     className="mb-4"
                   >
                     <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control type="date" name="dob"></Form.Control>
+                    <Form.Control
+                      type="date"
+                      name="dob"
+                      {...register("dob", {
+                        required: true,
+                      })}
+                      className={`${errors.dob ? "error-field" : ""}`}
+                    ></Form.Control>
+                    <span className="error-message">
+                      {errors.dob && <p>Date is Required</p>}
+                    </span>
                   </Col>
                   <Col
                     xxl={6}
@@ -83,7 +129,14 @@ const RegisterForm = () => {
                     <Form.Control
                       type="password"
                       name="password"
+                      {...register("password", {
+                        required: true,
+                      })}
+                      className={`${errors.password ? "error-field" : ""}`}
                     ></Form.Control>
+                    <span className="error-message">
+                      {errors.password && <p>Password is Required</p>}
+                    </span>
                   </Col>
                   <Col
                     xxl={6}
@@ -98,7 +151,18 @@ const RegisterForm = () => {
                     <Form.Control
                       type="password"
                       name="reset-password"
+                      {...register("confirm_password", {
+                        required: true,
+                      })}
+                      className={`${
+                        errors.confirm_password ? "error-field" : ""
+                      }`}
                     ></Form.Control>
+                    <span className="error-message">
+                      {errors.confirm_password && (
+                        <p>Confirm Password is Required</p>
+                      )}
+                    </span>
                   </Col>
                   <Col xxl={12} xl={12} md={12} className="text-center">
                     <Button type="submit" className="btn-register">
