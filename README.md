@@ -1,3 +1,3 @@
-# Simple Register Form Validation uisng React Hook Forms
+# Simple Register Form Validation
 
 Form UI Created using React Bootstrap and Validation has been done by using React Hook Forms
