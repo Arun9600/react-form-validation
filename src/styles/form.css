@@ -8,7 +8,8 @@
   align-items: center;
   min-height: 100vh;
 }
-.form-control:is(:hover, :focus) {
+.form-control:is(:hover, :focus),
+.react-datepicker__view-calendar-icon input:is(:hover, :focus) {
   box-shadow: none;
   outline: none;
   border: 1px solid #dee2e6;
@@ -19,6 +20,11 @@
 .form-control {
   height: 50px;
 }
+.react-datepicker__view-calendar-icon input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #dee2e6;
+}
 .error-message p {
   color: red;
 }
@@ -27,4 +33,7 @@
 }
 .error-field.form-control:is(:hover, :focus) {
   border-color: red;
+}
+.react-datepicker-wrapper {
+  display: block !important;
 }

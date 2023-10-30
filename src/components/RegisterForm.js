@@ -6,9 +6,28 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
+    setError,
+    watch,
   } = useForm();
+  const password = watch("password");
+  const confirm_password = watch("confirm_password");
   const onSubmit = (data) => {
     console.log(data);
+  };
+  const handleLettersOnly = (e) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+    clearErrors("name");
+    if (e.target.value == "") {
+      setError("name");
+    }
+  };
+  const handleKeyDownNumber = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9+]/g, "");
+    clearErrors("mobile_number");
+    if (e.target.value === "") {
+      setError("mobile_number");
+    }
   };
   return (
     <>
@@ -45,6 +64,7 @@ const RegisterForm = () => {
                         required: true,
                       })}
                       className={`${errors.name ? "error-field" : " "}`}
+                      onChange={handleLettersOnly}
                     ></Form.Control>
                     <span className="error-message">
                       {errors.name && <p>Name is Required</p>}
@@ -89,6 +109,7 @@ const RegisterForm = () => {
                         required: true,
                       })}
                       className={`${errors.mobile_number ? "error-field" : ""}`}
+                      onChange={handleKeyDownNumber}
                     ></Form.Control>
                     <span className="error-message">
                       {errors.mobile_number && <p>Mobile Number is Required</p>}
@@ -130,12 +151,17 @@ const RegisterForm = () => {
                       type="password"
                       name="password"
                       {...register("password", {
-                        required: true,
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message:
+                            "Password must be at least 8 characters long",
+                        },
                       })}
                       className={`${errors.password ? "error-field" : ""}`}
                     ></Form.Control>
                     <span className="error-message">
-                      {errors.password && <p>Password is Required</p>}
+                      {errors.password && <p>{errors.password.message}</p>}
                     </span>
                   </Col>
                   <Col
@@ -150,9 +176,11 @@ const RegisterForm = () => {
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
                       type="password"
-                      name="reset-password"
+                      name="confirm_password"
                       {...register("confirm_password", {
-                        required: true,
+                        required: "Confirm Password is required",
+                        validate: (value) =>
+                          value === password || "Passwords do not match",
                       })}
                       className={`${
                         errors.confirm_password ? "error-field" : ""
@@ -160,7 +188,7 @@ const RegisterForm = () => {
                     ></Form.Control>
                     <span className="error-message">
                       {errors.confirm_password && (
-                        <p>Confirm Password is Required</p>
+                        <p>{errors.confirm_password.message}</p>
                       )}
                     </span>
                   </Col>
