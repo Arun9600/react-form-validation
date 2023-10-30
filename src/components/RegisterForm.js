@@ -84,12 +84,17 @@ const RegisterForm = () => {
                       type="email"
                       name="email"
                       {...register("email", {
-                        required: true,
+                        required: "Email is required",
+                        pattern: {
+                          value:
+                            /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+                          message: "Enter the valid email address",
+                        },
                       })}
                       className={`${errors.email ? "error-field" : ""}`}
                     ></Form.Control>
                     <span className="error-message">
-                      {errors.email && <p>Email is Required</p>}
+                      {errors.email && <p>{errors.email.message}</p>}
                     </span>
                   </Col>
                   <Col
