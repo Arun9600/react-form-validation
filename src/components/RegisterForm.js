@@ -29,6 +29,11 @@ const RegisterForm = () => {
       setError("mobile_number");
     }
   };
+
+  const maxDate = () => {
+    let max = new Date().toISOString().split("T")[0];
+    return max;
+  };
   return (
     <>
       <Container>
@@ -137,6 +142,7 @@ const RegisterForm = () => {
                         required: true,
                       })}
                       className={`${errors.dob ? "error-field" : ""}`}
+                      max={maxDate()}
                     ></Form.Control>
                     <span className="error-message">
                       {errors.dob && <p>Date is Required</p>}
